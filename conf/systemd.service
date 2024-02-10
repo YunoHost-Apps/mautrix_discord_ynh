@@ -8,38 +8,30 @@ User=__APP__
 Group=__APP__
 WorkingDirectory=__INSTALL_DIR__/
 ExecStart=__INSTALL_DIR__/mautrix-discord -c __INSTALL_DIR__/config.yaml
-StandardOutput=append:/var/log/__APP__/__APP__.log
-StandardError=inherit
 Restart=always
 RestartSec=3
 
-# Sandboxing options to harden security
-# Depending on specificities of your service/app, you may need to tweak these
-# .. but this should be a good baseline
-# Details for these options: https://www.freedesktop.org/software/systemd/man/systemd.exec.html
-ReadWritePaths=__INSTALL_DIR__ /var/log/__APP__
+# Optional hardening to improve security
+ReadWritePaths=__INSTALL_DIR__/ /var/log/__APP__
 NoNewPrivileges=yes
 MemoryDenyWriteExecute=true
-PrivateTmp=yes
 PrivateDevices=yes
-PrivateUsers=true
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6 AF_NETLINK
-RestrictNamespaces=yes
-RestrictRealtime=yes
+PrivateTmp=yes
+ProtectHome=yes
+ProtectSystem=strict
+ProtectControlGroups=true
 RestrictSUIDSGID=true
-DevicePolicy=closed
-ProtectClock=yes
-ProtectHostname=yes
-ProtectProc=invisible
-ProtectSystem=full
-ProtectControlGroups=yes
-ProtectKernelModules=yes
-ProtectKernelTunables=yes
+RestrictRealtime=true
+LockPersonality=true
 ProtectKernelLogs=true
-LockPersonality=yes
+ProtectKernelTunables=true
+ProtectHostname=true
+ProtectKernelModules=true
+PrivateUsers=true
+ProtectClock=true
 SystemCallArchitectures=native
 SystemCallErrorNumber=EPERM
-SystemCallFilter=~@clock @debug @module @mount @obsolete @reboot @setuid @swap @cpu-emulation @privileged
+SystemCallFilter=@system-service
 
 # Denying access to capabilities that should not be relevant for webapps
 # Doc: https://man7.org/linux/man-pages/man7/capabilities.7.html

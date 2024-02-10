@@ -26,6 +26,9 @@ ynh_restore_file --origin_path="$install_dir"
 
 chown -R $app:www-data "$install_dir"
 chmod 750 "$install_dir/$APP_BIN"
+chmod 750 "$install_dir"
+chmod -R 750 "$install_dir"
+chown -R $app:$app "$install_dir"
 
 #=================================================
 # RESTORE THE POSTGRESQL DATABASE
@@ -54,9 +57,14 @@ ynh_script_progression --message="Restoring system configurations related to $ap
 ynh_restore_file --origin_path="/etc/systemd/system/$app.service"
 systemctl enable $app.service --quiet
 
-yunohost service add $app --description="Matrix Discord pupetting bridge for YunoHost" --log="/var/log/$app/$app.log"
-
 ynh_restore_file --origin_path="/etc/logrotate.d/$app"
+# Use logrotate to manage application logfile(s)
+mkdir --parents "/var/log/$app"
+chmod -R 600 "/var/log/$app"
+chmod 700 "/var/log/$app"
+chown -R $app:$app /var/log/$app
+
+yunohost service add $app --description="Matrix Discord pupetting bridge for YunoHost" --log="/var/log/$app/$app.log"
 
 #=================================================
 # GENERIC FINALIZATION

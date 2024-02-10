@@ -7,7 +7,7 @@ name = "Matrix-Discord bridge"
 description.en = "Matrix / Synapse puppeting bridge for Discord"
 description.fr = "Passerelle Matrix / Synapse pour Discord"
 
-version = "0.6.4~ynh1"
+version = "0.6.5~ynh1"
 
 maintainers = ["fflorent"]
 
@@ -63,12 +63,6 @@ ram.runtime = "1024M"
     type = "string"
     example = "@johndoe:server.name or server.name or *"
     # FIXME this help make the installation crash when installing through the CLI.
-    # help.en = """A remote or local user (@johndoe:server.name),the local server (server.name), a remote server (matrix.org), or all remote/local servers (*) can be authorized.
-    # Give the Matrix server_name, not the full domain/URL.
-    # It is also possible to specify multiple values by separating them with comma. Example: @johndoe:server.name,domain.tld,matrix.org"""
-    # help.fr = """Un compte local ou distant (@johndoe:server.name), le serveur local (server.name), un serveur distant (matrix.org), ou tous les serveurs remote/local (*).
-    # Donner le nom du serveur Matrix, pas le domaine/URL complet.
-    # Il est également possible de spécifier plusieurs valeurs en les séparant par une virgule. Exemple : @johndoe:server.name,domain.tld,matrix.org"""
 
     [install.bot_synapse_adm]
     ask.en = "Give the Discord bot administrator rights to the Synapse instance?"
@@ -79,8 +73,6 @@ ram.runtime = "1024M"
     default = true
 
 [resources]
-    # See the packaging documentation for the full set
-    # of explanation regarding the behavior and properties for each of those
 
     [resources.sources]
 
@@ -89,12 +81,12 @@ ram.runtime = "1024M"
         extract = false
         rename = "mautrix-discord"
 
-        amd64.url = "https://github.com/mautrix/discord/releases/download/v0.6.4/mautrix-discord-amd64"
-        amd64.sha256 = "1510838d4128d401fceb3d92ba7571b980f06d5030bde3fdba73dd1b335a5868"
-        arm64.url = "https://github.com/mautrix/discord/releases/download/v0.6.4/mautrix-discord-arm64"
-        arm64.sha256 = "a9c33bed28763f182382110748f72bd866e90ab1bf62c90abcabe0d634f901aa"
-        armhf.url = "https://github.com/mautrix/discord/releases/download/v0.6.4/mautrix-discord-arm"
-        armhf.sha256 = "31ddf6c5ed5fc5b2ca4224e7bd1bfdc856a6da85d7422538a1e8f6f06523e7f7"
+        amd64.url = "https://github.com/mautrix/discord/releases/download/v0.6.5/mautrix-discord-amd64"
+        amd64.sha256 = "c89e2fdd6f5de28ae84d7f8ced27e174e8592364efd69c0ca6e8679e5c151489"
+        arm64.url = "https://github.com/mautrix/discord/releases/download/v0.6.5/mautrix-discord-arm64"
+        arm64.sha256 = "080b520871a51ddbe866ad83c889d47323452e6c25ee1b785e04a690884a77d9"
+        armhf.url = "https://github.com/mautrix/discord/releases/download/v0.6.5/mautrix-discord-arm"
+        armhf.sha256 = "e3a9eb3f64dc6d9e568f34f79b0b22cd08584c01779d22788ee6e966f5cde827"
 
 
     [resources.system_user]
@@ -111,10 +103,7 @@ ram.runtime = "1024M"
     main.default = 29334
 
     [resources.apt]
-    # This will automatically install/uninstall the following apt packages
-    # and implicitly define the $phpversion setting as 8.0 (if phpX.Y-foobar dependencies are listed)
     packages = "postgresql"
 
     [resources.database]
-    # This will automatically provision/deprovison a MySQL DB and store the corresponding credentials in settings $db_user, $db_name, $db_pwd
     type = "postgresql"
