@@ -16,10 +16,11 @@ Si vous n’avez pas YunoHost, regardez [ici](https://yunohost.org/#/install) po
 
 ## Vue d’ensemble
 
-Ceci est une fausse description des fonctionalités de l'app
+Un pont entre Matrix et Discord présenté comme un service YunoHost. Les messages, les médias et les notifications sont transférés entre un utilisateur de Discord et un utilisateur de Matrix. Le pont "Mautrix-Discord" consiste en un service synapse app et repose sur postgresql. Par conséquent, Synapse pour YunoHost doit être installé au préalable.
 
+**Attention : toujours sauvegarder et restaurer les applications matrix_synapse et mautrix_discord de Yunohost ensemble !
 
-**Version incluse :** 0.6.4~ynh1
+**Version incluse :** 0.6.5~ynh1
 
 ## Captures d’écran
 
