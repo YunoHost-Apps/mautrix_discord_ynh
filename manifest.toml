@@ -62,7 +62,6 @@ ram.runtime = "1024M"
     ask.fr = "Choisissez le/les compte(s) Matrix autorisés à utiliser la passerelle Discord."
     type = "string"
     example = "@johndoe:server.name or server.name or *"
-    # FIXME this help make the installation crash when installing through the CLI.
 
     [install.bot_synapse_adm]
     ask.en = "Give the Discord bot administrator rights to the Synapse instance?"
