@@ -20,12 +20,12 @@ services = ["__APP__"]
         [main.permissions.listrelay]
         ask = "Users bridged thanks to Relay Mode"
         type = "tags"
-        help = "Relay Role: Talk on WhatsApp through the RelayBot in a room where it has been activated with '!wa set-relay', no access otherwise."
+        help = "Relay Role: Talk on Discord through the RelayBot in a room where it has been activated with '!wa set-relay', no access otherwise."
 
         [main.permissions.listuser]
         ask = "Bridge Users"
         type = "tags"
-        help = "User Role: Access to use the bridge to chat with a WhatsApp account."
+        help = "User Role: Access to use the bridge to chat with a Discord account."
 
         [main.permissions.listadmin]
         ask = "Bridge Administrators"
@@ -44,11 +44,11 @@ services = ["__APP__"]
         [main.bot.displayname]
         ask = "Display name for Bot"
         type = "string"
-        help = "Set to 'remove' to remove display name, leave empty to set default 'WhatsApp bridge bot'"
+        help = "Set to 'remove' to remove display name, leave empty to set default 'Discord bridge bot'"
         bind = ":__INSTALL_DIR__/config.yaml"
 
         [main.bot.avatar]
         ask = "Avatar for Bot"
         type = "string"
-        help = "Should be in format 'mxc://server_name/NeXNQarUbrlYBiPCpprYsRqr', see README for tutorial. Set to 'remove' to remove avatar, leave empty to use standard WhatsApp logo."
+        help = "Should be in format 'mxc://server_name/NeXNQarUbrlYBiPCpprYsRqr', see README for tutorial. Set to 'remove' to remove avatar, leave empty to use standard Discord logo."
         bind = ":__INSTALL_DIR__/config.yaml"
