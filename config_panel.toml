@@ -32,25 +32,6 @@ services = ["__APP__"]
         type = "tags"
         help = "Admin Role: User level and some additional administration tools."
 
-    [main.bridge]
-    name = "Puppetting Bridge Settings"
-
-        [main.bridge.enable_relaybot]
-        ask = "Should Relay Mode be allowed?"
-        type = "boolean"
-        yes = "true"
-		no = "false"
-        help = "If allowed, '!wa set-relay' can be used to turn any Bridge User into a RelayBot for that chat. This allows people to talk on WhatsApp without an own account."
-        bind = "relay>enabled:__INSTALL_DIR__/config.yaml"
-
-        [main.bridge.admin_only]
-        ask = "Should only Bridge Admins be allowed to set themselves as Relay Users?"
-        type = "boolean"
-        yes = "true"
-		no = "false"
-        help = "See User management -> Admins"
-        bind = ":__INSTALL_DIR__/config.yaml"
-
     [main.bot]
     name = "Robot Settings"
 
