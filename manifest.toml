@@ -86,7 +86,11 @@ ram.runtime = "1024M"
         arm64.sha256 = "080b520871a51ddbe866ad83c889d47323452e6c25ee1b785e04a690884a77d9"
         armhf.url = "https://github.com/mautrix/discord/releases/download/v0.6.5/mautrix-discord-arm"
         armhf.sha256 = "e3a9eb3f64dc6d9e568f34f79b0b22cd08584c01779d22788ee6e966f5cde827"
-
+        
+        autoupdate.strategy = "latest_github_release"
+        autoupdate.asset.amd64 = "mautrix-discord-amd64
+        autoupdate.asset.arm64 = "mautrix-discord-arm64"
+        autoupdate.asset.armhf = "mautrix-discord-arm"
 
     [resources.system_user]
     home = "/opt/yunohost/__APP__"
