@@ -5,7 +5,7 @@ EZ editatu eskuz.
 
 # Matrix-Discord bridge YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://dash.yunohost.org/appci/app/mautrix_discord) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
+[![Integrazio maila](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://ci-apps.yunohost.org/ci/apps/mautrix_discord/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
 
 [![Instalatu Matrix-Discord bridge YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mautrix_discord)
 

@@ -5,7 +5,7 @@
 
 # YunoHost 上的 Matrix-Discord bridge
 
-[![集成程度](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://dash.yunohost.org/appci/app/mautrix_discord) ![工作状态](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
+[![集成程度](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://ci-apps.yunohost.org/ci/apps/mautrix_discord/) ![工作状态](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![维护状态](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
 
 [![使用 YunoHost 安装 Matrix-Discord bridge](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mautrix_discord)
 

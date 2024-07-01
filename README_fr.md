@@ -5,7 +5,7 @@ Il NE doit PAS être modifié à la main.
 
 # Matrix-Discord bridge pour YunoHost
 
-[![Niveau d’intégration](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://dash.yunohost.org/appci/app/mautrix_discord) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
+[![Niveau d’intégration](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://ci-apps.yunohost.org/ci/apps/mautrix_discord/) ![Statut du fonctionnement](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![Statut de maintenance](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
 
 [![Installer Matrix-Discord bridge avec YunoHost](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mautrix_discord)
 
