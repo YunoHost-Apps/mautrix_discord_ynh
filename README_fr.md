@@ -20,7 +20,7 @@ Un pont entre Matrix et Discord présenté comme un service YunoHost. Les messag
 
 **Attention : toujours sauvegarder et restaurer les applications matrix_synapse et mautrix_discord de Yunohost ensemble !
 
-**Version incluse :** 0.7.0~ynh1
+**Version incluse :** 0.7.1~ynh1
 ## Documentations et ressources
 
 - Documentation officielle de l’admin : <https://docs.mau.fi/bridges/go/discord/index.html>
