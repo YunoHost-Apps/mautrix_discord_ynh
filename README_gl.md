@@ -21,7 +21,7 @@ A puppeting bridge between Matrix and Discord packaged as a YunoHost service. Me
 **Attention: always backup and restore the Yunohost matrix_synapse et mautrix_discord apps together!**
 
 
-**Versión proporcionada:** 0.7.0~ynh1
+**Versión proporcionada:** 0.7.1~ynh1
 ## Documentación e recursos
 
 - Documentación oficial para admin: <https://docs.mau.fi/bridges/go/discord/index.html>
