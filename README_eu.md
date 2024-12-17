@@ -5,7 +5,9 @@ EZ editatu eskuz.
 
 # Matrix-Discord bridge YunoHost-erako
 
-[![Integrazio maila](https://dash.yunohost.org/integration/mautrix_discord.svg)](https://ci-apps.yunohost.org/ci/apps/mautrix_discord/) ![Funtzionamendu egoera](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.status.svg) ![Mantentze egoera](https://ci-apps.yunohost.org/ci/badges/mautrix_discord.maintain.svg)
+[![Integrazio maila](https://apps.yunohost.org/badge/integration/mautrix_discord)](https://ci-apps.yunohost.org/ci/apps/mautrix_discord/)
+![Funtzionamendu egoera](https://apps.yunohost.org/badge/state/mautrix_discord)
+![Mantentze egoera](https://apps.yunohost.org/badge/maintained/mautrix_discord)
 
 [![Instalatu Matrix-Discord bridge YunoHost-ekin](https://install-app.yunohost.org/install-with-yunohost.svg)](https://install-app.yunohost.org/?app=mautrix_discord)
 
@@ -21,7 +23,7 @@ A puppeting bridge between Matrix and Discord packaged as a YunoHost service. Me
 **Attention: always backup and restore the Yunohost matrix_synapse et mautrix_discord apps together!**
 
 
-**Paketatutako bertsioa:** 0.7.1~ynh1
+**Paketatutako bertsioa:** 0.7.2~ynh1
 ## Dokumentazioa eta baliabideak
 
 - Administratzaileen dokumentazio ofiziala: <https://docs.mau.fi/bridges/go/discord/index.html>
