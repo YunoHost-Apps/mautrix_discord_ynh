@@ -9,6 +9,8 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
+synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
+
 #=================================================
 # REMOVE SYSTEM CONFIGURATIONS
 #=================================================
