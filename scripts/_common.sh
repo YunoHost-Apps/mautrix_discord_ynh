@@ -2,6 +2,7 @@
 
 APP_BIN=mautrix-discord
 
+synapse_install_dir=$(yunohost app setting $synapse_instance install_dir)
 #=================================================
 # PERSONAL HELPERS
 #=================================================
