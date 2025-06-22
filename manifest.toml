@@ -92,10 +92,8 @@ ram.runtime = "1024M"
         autoupdate.asset.armhf = "^mautrix-discord-arm$"
 
     [resources.system_user]
-    home = "/opt/yunohost/__APP__"
 
     [resources.install_dir]
-    dir = "/opt/yunohost/__APP__"
 
     [resources.permissions]
     main.allowed = "all_users"
