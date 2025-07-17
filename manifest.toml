@@ -7,7 +7,7 @@ name = "Matrix-Discord bridge"
 description.en = "Matrix / Synapse puppeting bridge for Discord"
 description.fr = "Passerelle Matrix / Synapse pour Discord"
 
-version = "0.7.4~ynh1"
+version = "0.7.5~ynh1"
 
 maintainers = ["fflorent"]
 
@@ -79,12 +79,12 @@ ram.runtime = "1024M"
         extract = false
         rename = "mautrix-discord"
 
-        amd64.url = "https://github.com/mautrix/discord/releases/download/v0.7.4/mautrix-discord-amd64"
-        amd64.sha256 = "c8d714820c1153cf9c0b8a5908d1391ccfb406126367621ce41d0a3158baaf08"
-        arm64.url = "https://github.com/mautrix/discord/releases/download/v0.7.4/mautrix-discord-arm64"
-        arm64.sha256 = "4c2fc30fe9b7c63d974bf77bef70ef87354703c607c8c1211f7711ad72910604"
-        armhf.url = "https://github.com/mautrix/discord/releases/download/v0.7.4/mautrix-discord-arm"
-        armhf.sha256 = "a135e11268f38713c475d9bf023e165a27196a3af965af2bead6f19fd16195ff"
+        amd64.url = "https://github.com/mautrix/discord/releases/download/v0.7.5/mautrix-discord-amd64"
+        amd64.sha256 = "e6777fb1abbd0f501b33c78b81fc949a33d6934912418708e82aceae872b4a40"
+        arm64.url = "https://github.com/mautrix/discord/releases/download/v0.7.5/mautrix-discord-arm64"
+        arm64.sha256 = "6114866c99478abbe8d9b22c2cb297c02f663d0cb2c0c7c86bc02a2c756477e0"
+        armhf.url = "https://github.com/mautrix/discord/releases/download/v0.7.5/mautrix-discord-arm"
+        armhf.sha256 = "cd549b4b2ab5a6c54e48f82acd8aa38558d7f071a0e40e415cad523d8468b896"
 
         autoupdate.strategy = "latest_github_release"
         autoupdate.asset.amd64 = "^mautrix-discord-amd64$"
