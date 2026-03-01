@@ -59,7 +59,7 @@ set__botname() {
     ynh_app_setting_set --key=botname --value="$botname"
     synapse_instance=$(ynh_app_setting_get --key synapse_instance)
 
-    sed -i "s/username:.*/username: $botname/" "$install_dir/config.yaml"
+    ynh_exec_as_app sed -i "s/username:.*/username: $botname/" "$install_dir/config.yaml"
     "$install_dir/$APP_BIN" -g -c "$install_dir/config.yaml" -r "/etc/matrix-$synapse_instance/app-service/$app.yaml"
     local synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
     "$synapse_install_dir/update_synapse_for_appservice.sh" || ynh_die "Synapse can't restart with the appservice configuration"
