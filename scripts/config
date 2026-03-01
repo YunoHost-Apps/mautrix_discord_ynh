@@ -62,8 +62,8 @@ set__botname() {
     sed -i "s/username:.*/username: $botname/" "$install_dir/config.yaml"
     "$install_dir/$APP_BIN" -g -c "$install_dir/config.yaml" -r "/etc/matrix-$synapse_instance/app-service/$app.yaml"
     local synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
-    "$synapse_install_dir/update_synapse_for_appservice.sh" || ynh_die --message="Synapse can't restart with the appservice configuration"
-    #REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "$install_dir"
+    "$synapse_install_dir/update_synapse_for_appservice.sh" || ynh_die "Synapse can't restart with the appservice configuration"
+    #REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper #REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "$install_dir"
     ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
     ynh_store_file_checksum "$install_dir/config.yaml"
 }
