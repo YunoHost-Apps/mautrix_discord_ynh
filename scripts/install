@@ -78,7 +78,7 @@ set__listrelay
 set__listadmin
 
 $install_dir/$APP_BIN -g -c $install_dir/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
-$synapse_install_dir/update_synapse_for_appservice.sh || ynh_die --message="Synapse can't restart with the appservice configuration"
+$synapse_install_dir/update_synapse_for_appservice.sh || ynh_die "Synapse can't restart with the appservice configuration"
 
 ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
 ynh_store_file_checksum "$install_dir/config.yaml"
@@ -88,7 +88,7 @@ ynh_store_file_checksum "$install_dir/config.yaml"
 #=================================================
 ynh_script_progression "Starting $app's systemd service..."
 
-ynh_systemctl --service=$app --action="start"
+ynh_systemctl --action="start"
 
 # Wait until the synapse user is created
 sleep 30
@@ -99,7 +99,7 @@ then
   ynh_psql_db_shell $synapse_db_name <<< "UPDATE users SET admin = 1 WHERE name = ""$botname"";"
 fi
 
-ynh_systemctl --service=$app --action="restart"
+ynh_systemctl --action="restart"
 
 #=================================================
 # END OF SCRIPT
