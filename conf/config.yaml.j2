@@ -1,12 +1,12 @@
 # Homeserver details.
 homeserver:
     # The address that this appservice can use to connect to the homeserver.
-    address: https://__DOMAIN__
+    address: https://{{ domain }}
     # Publicly accessible base URL for media, used for avatars in relay mode.
     # If not set, the connection address above will be used.
     public_address: null
     # The domain of the homeserver (also known as server_name, used for MXIDs, etc).
-    domain: __SERVER_NAME__
+    domain: {{ server_name }}
 
     # What software is the homeserver running?
     # Standard Matrix homeservers like Synapse, Dendrite and Conduit should just use "standard" here.
@@ -18,7 +18,7 @@ homeserver:
     # Endpoint for reporting per-message status.
     message_send_checkpoint_endpoint: null
     # Does the homeserver support https://github.com/matrix-org/matrix-spec-proposals/pull/2246?
-    async_media: __ASYNC_MEDIA__
+    async_media: {{ async_media }}
 
     # Should the bridge use a websocket for connecting to the homeserver?
     # The server side is currently not documented anywhere and is only implemented by mautrix-wsproxy,
@@ -31,11 +31,11 @@ homeserver:
 # Changing these values requires regeneration of the registration.
 appservice:
     # The address that the homeserver can use to connect to this appservice.
-    address: http://127.0.0.1:__PORT__
+    address: http://127.0.0.1:{{ port }}
 
     # The hostname and port where this appservice should listen.
     hostname: 0.0.0.0
-    port: __PORT__
+    port: {{ port }}
 
     # Database config.
     database:
@@ -46,7 +46,7 @@ appservice:
         #           https://github.com/mattn/go-sqlite3#connection-string
         #   Postgres: Connection string. For example, postgres://user:password@host/database?sslmode=disable
         #             To connect via Unix socket, use something like postgres:///dbname?host=/var/run/postgresql
-        uri: postgres://__APP__:__DB_PWD__@localhost:5432/__DB_NAME__
+        uri: postgres://{{ app }}:{{ db_pwd }}@localhost:5432/{{ db_name }}
         # Maximum number of connections. Mostly relevant for Postgres.
         max_open_conns: 20
         max_idle_conns: 2
@@ -56,11 +56,11 @@ appservice:
         max_conn_lifetime: null
 
     # The unique ID of this appservice.
-    id: __APPSERVICEID__
+    id: {{ appserviceid }}
     # Appservice bot details.
     bot:
         # Username of the appservice bot.
-        username: __BOTNAME__
+        username: {{ botname }}
         # Display name and avatar for bot. Set to "remove" to remove display name/avatar, leave empty
         # to leave display name/avatar as-is.
         displayname: Discord bridge bot
@@ -81,9 +81,11 @@ appservice:
 
 # Bridge config
 bridge:
+    # {% raw %}
     # Localpart template of MXIDs for Discord users.
     # {{.}} is replaced with the internal ID of the Discord user.
-    username_template: discord_{{.}}
+    # {% endraw %}
+    username_template: {{ 'discord_{{.}}' }}
     # Displayname template for Discord users. This is also used as the room name in DMs if private_chat_portal_meta is enabled.
     # Available variables:
     #   .ID - Internal user ID
@@ -94,7 +96,7 @@ bridge:
     #   .System - Whether the user is an official system user
     #   .Webhook - Whether the user is a webhook and is not an application
     #   .Application - Whether the user is an application
-    displayname_template: '{{or .GlobalName .Username}}{{if .Bot}} (bot){{end}}'
+    displayname_template: {{ '{{or .GlobalName .Username}}{{if .Bot}} (bot){{end}}' }}
     # Displayname template for Discord channels (bridged as rooms, or spaces when type=4).
     # Available variables:
     #   .Name - Channel name, or user displayname (pre-formatted with displayname_template) in DMs.
@@ -102,11 +104,11 @@ bridge:
     #   .GuildName - Guild name.
     #   .NSFW - Whether the channel is marked as NSFW.
     #   .Type - Channel type (see values at https://github.com/bwmarrin/discordgo/blob/v0.25.0/structs.go#L251-L267)
-    channel_name_template: '{{if or (eq .Type 3) (eq .Type 4)}}{{.Name}}{{else}}#{{.Name}}{{end}}'
+    channel_name_template: {{ '{{if or (eq .Type 3) (eq .Type 4)}}{{.Name}}{{else}}#{{.Name}}{{end}}' }}
     # Displayname template for Discord guilds (bridged as spaces).
     # Available variables:
     #   .Name - Guild name
-    guild_name_template: '{{.Name}}'
+    guild_name_template: {{ '{{.Name}}' }}
     # Whether to explicitly set the avatar and room name for private chat portal rooms.
     # If set to `default`, this will be enabled in encrypted rooms and disabled in unencrypted rooms.
     # If set to `always`, all DM rooms will have explicit names and avatars set.
@@ -175,13 +177,13 @@ bridge:
         # Should custom mxc:// URIs be used instead of reuploading media?
         enabled: false
         # Pattern for normal message attachments.
-        attachments: mxc://discord-media.mau.dev/attachments|{{.ChannelID}}|{{.AttachmentID}}|{{.FileName}}
+        attachments: {{ 'mxc://discord-media.mau.dev/attachments|{{.ChannelID}}|{{.AttachmentID}}|{{.FileName}}' }}
         # Pattern for custom emojis.
-        emojis: mxc://discord-media.mau.dev/emojis|{{.ID}}.{{.Ext}}
+        emojis: {{ 'mxc://discord-media.mau.dev/emojis|{{.ID}}.{{.Ext}}' }}
         # Pattern for stickers. Note that animated lottie stickers will not be converted if this is enabled.
-        stickers: mxc://discord-media.mau.dev/stickers|{{.ID}}.{{.Ext}}
+        stickers: {{ 'mxc://discord-media.mau.dev/stickers|{{.ID}}.{{.Ext}}' }}
         # Pattern for static user avatars.
-        avatars: mxc://discord-media.mau.dev/avatars|{{.UserID}}|{{.AvatarID}}.{{.Ext}}
+        avatars: {{ 'mxc://discord-media.mau.dev/avatars|{{.UserID}}|{{.AvatarID}}.{{.Ext}}' }}
     # Settings for converting animated stickers.
     animated_sticker:
         # Format to which animated stickers should be converted.
@@ -343,9 +345,15 @@ bridge:
     #   domain - All users on that homeserver
     #     mxid - Specific user
     permissions:
-        "__LISTRELAY__": "relay"
-        "__LISTUSER__": "user"
-        "__LISTADMIN__": "admin"
+        {% for relay in listrelay.split(",") %}
+        "{{ relay.trim() }}": "relay"
+        {% endfor %}
+        {% for user in listuser.split(",") %}
+        "{{ user.trim() }}": "user"
+        {% endfor %}
+        {% for admin in listadmin.split(",") %}
+        "{{ admin.trim() }}": "admin"
+        {% endfor %}
 
 # Logging config. See https://github.com/tulir/zeroconfig for details.
 logging:
@@ -355,7 +363,7 @@ logging:
       format: pretty-colored
     - type: file
       format: json
-      filename: /var/log/__APP__/__APP__.log
+      filename: /var/log/{{ app }}/{{ app }}.log
       max_size: 100
       max_backups: 10
       compress: true
