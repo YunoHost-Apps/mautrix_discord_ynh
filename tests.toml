@@ -26,6 +26,7 @@ preinstall = """
 
 args.botadmin = "@johndoe:server.name"
 args.botusers = "server.name"
+args.display_avatar = "true"
 
 # -------------------------------
 # Commits to test upgrade from
