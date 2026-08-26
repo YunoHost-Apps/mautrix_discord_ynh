@@ -70,6 +70,18 @@ ram.runtime = "1024M"
     help.fr = "Si true, le robot groupera les conversations Discord dans une communauté Matrix.Pas nécessaire si vous avez réglé Synapse pour qu'il autorise les non-admin à créer des communautés."
     default = true
 
+    [install.display_avatar]
+    type = "boolean"
+    ask.en = "Would you like to display avatar when relaying messages from not bridged users?"
+    ask.fr = "Souhaitez-vous afficher les avatars lorsque vous relayez les messages des ustilisateurs non bridgés ?"
+    default = false
+    
+    [install.domain]
+    type = "domain"
+    ask.en = "Choose the domain to make avatars accessible by Discord"
+    ask.fr = "Choisissez le domaine pour rendre les avatars accessible par Discord"
+    visible = "display_avatar"
+    
 [resources]
 
     [resources.sources]
