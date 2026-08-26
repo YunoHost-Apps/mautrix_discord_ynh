@@ -75,7 +75,7 @@ chown -R $app:$app /var/log/$app
 
 # Create a dedicated nginx config
 if [ "$display_avatar" == "true" ]; then
-ynh_config_add_nginx
+    ynh_config_add_nginx
 fi
 
 #=================================================
