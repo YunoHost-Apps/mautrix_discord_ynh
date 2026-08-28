@@ -49,13 +49,13 @@ ram.runtime = "1024M"
     help.fr = "Un utilisateur système sera créé. Inviter @discordbot:localsynapse.servername depuis un compte Matrix autorisé pour démarrer une passerelle.Donner le nom du serveur Matrix, pas le domaine/URL complet."
     default = "discordbot"
 
-    [install.botadmin]
-    ask.en = "Choose the Matrix account administrator of the Discord bot"
-    ask.fr = "Choisissez le compte Matrix administrateur du robot Discord"
+    [install.botadmins]
+    ask.en = "Choose the Matrix account(s) administrator(s) of the Discord bot"
+    ask.fr = "Choisissez le(s) compte(s) Matrix administrateur(s) du robot Discord"
     type = "string"
-    example = "@johndoe:localsynapse.servername or @johndoe:matrix.org"
-    help.en = "The administrator does not need to be a local Synapse account. Valid formats are @johndoe:localsynapse.servername or @johndoe:matrix.org"
-    help.fr = "L'administrateur peut ne pas être un compte local Synapse. Les formats valables sont @johndoe:localsynapse.servername or @johndoe:matrix.org"
+    example = "@johndoe:localsynapse.servername,@johndoe:matrix.org"
+    help.en = "The administrators do not need to be local Synapse accounts. Valid formats are @johndoe:localsynapse.servername or @johndoe:matrix.org. It is also possible to specify multiple values by separating them with comma."
+    help.fr = "Les administrateurs peuvent ne pas être des comptes locaux Synapse. Les formats valables sont @johndoe:localsynapse.servername or @johndoe:matrix.org. Il est également possible de spécifier plusieurs valeurs en les séparant par une virgule."
 
     [install.botusers]
     ask.en = "Choose Matrix user(s) authorized to bridge with the Discord bot."

@@ -20,6 +20,7 @@ appserviceid=$app
 
 ynh_app_setting_set_default --key="avatar" --value="mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC"
 ynh_app_setting_set_default --key="displayname" --value="Discord bridge bot"
+ynh_app_setting_set_default --key="relays" --value=""
 
 #=================================================
 # APP "BUILD" (DEPLOYING SOURCES, VENV, COMPILING ETC)
