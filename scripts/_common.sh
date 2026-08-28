@@ -29,14 +29,14 @@ print(json.dumps(my_inverted_dict))
 EOF
     )
 
-    listrelay="$(jq '.relay | join(",")' <<< "$permissions")"
-    ynh_app_setting_set --key=listrelay --value="$listrelay"
+    relays="$(jq '.relay | join(",")' <<< "$permissions")"
+    ynh_app_setting_set --key=relays --value="$relays"
 
-    listuser="$(jq '.user | join(",")' <<< "$permissions")"
-    ynh_app_setting_set --key=listuser --value="$listuser"
+    botusers="$(jq '.user | join(",")' <<< "$permissions")"
+    ynh_app_setting_set --key=botusers --value="$botusers"
 
-    listadmin="$(jq '.admin | join(",")' <<< "$permissions")"
-    ynh_app_setting_set --key=listadmin --value="$listadmin"
+    botadmins="$(jq '.admin | join(",")' <<< "$permissions")"
+    ynh_app_setting_set --key=botadmins --value="$botadmins"
 }
 
 rename_setting() {
