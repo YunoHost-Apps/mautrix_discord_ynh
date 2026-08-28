@@ -12,35 +12,6 @@ install_dir=$(ynh_app_setting_get --key=install_dir)
 # SPECIFIC GETTERS FOR TOML SHORT KEY
 #=================================================
 
-get__botname() {
-    botname=$(ynh_app_setting_get --key botname)
-    echo "${botname}"
-}
-
-get__listuser() {
-  existingUsers=$(grep -- "\".*: user" "$install_dir/config.yaml" | sed -r 's/: user//' | tr -d '[:blank:]' | sed '/^#/d' | tr -d '\"' | tr '\n' ',')
-
-  cat <<EOF
-"$existingUsers"
-EOF
-}
-
-get__listrelay() {
-  existingRelayUsers=$(grep -- "\".*: relay" "$install_dir/config.yaml" | sed -r 's/: relay//' | tr -d '[:blank:]' | sed '/^#/d' | tr -d '\"' | tr '\n' ',')
-
-  cat <<EOF
-"$existingRelayUsers"
-EOF
-}
-
-get__listadmin() {
-  existingAdmins=$(grep -- "\".*: admin" "$install_dir/config.yaml" | sed -r 's/: admin//' | tr -d '[:blank:]' | sed '/^#/d' | tr -d '\"' | tr '\n' ',')
-
-  cat <<EOF
-"$existingAdmins"
-EOF
-}
-
 #=================================================
 # SPECIFIC VALIDATORS FOR TOML SHORT KEYS
 #=================================================
@@ -49,23 +20,21 @@ EOF
 # SPECIFIC SETTERS FOR TOML SHORT KEYS
 #=================================================
 
-set__botname() {
-    old_botname=$(ynh_app_setting_get --key botname)
-    if [ "$botname" -eq "$old_botname" ] # Check to avoid updating botname when it's not needed.
-    then
-      return
-    fi
 
-    ynh_app_setting_set --key=botname --value="$botname"
-    synapse_instance=$(ynh_app_setting_get --key synapse_instance)
+#=================================================
+# OVERWRITING APPLY STEP
+#=================================================
 
-    ynh_exec_as_app sed -i "s/username:.*/username: $botname/" "$install_dir/config.yaml"
+ynh_app_config_apply() {
+    _ynh_app_config_apply
+    chmod 400 "$install_dir/config.yaml"
+    chown "$app:$app" "$install_dir/config.yaml"
+
+    ynh_config_add --template="config.yaml.j2" --destination="$install_dir/config.yaml" --jinja
     "$install_dir/$APP_BIN" -g -c "$install_dir/config.yaml" -r "/etc/matrix-$synapse_instance/app-service/$app.yaml"
-    local synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
+    local synapse_install_dir=$(ynh_app_setting_get --app "$synapse_instance" --key "install_dir")
     "$synapse_install_dir/update_synapse_for_appservice.sh" || ynh_die "Synapse can't restart with the appservice configuration"
-    #REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper #REMOVEME? Assuming the install dir is setup using ynh_setup_source, the proper chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chmod/chowns are now already applied and it shouldn't be necessary to tweak perms | chown -R "$app:$app" "$install_dir"
     ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
-    ynh_store_file_checksum "$install_dir/config.yaml"
 }
 
 ynh_app_config_run $1
