@@ -43,7 +43,7 @@ services = ["__APP__"]
         [main.bot.displayname]
         ask = "Display name for Bot"
         type = "string"
-        help = "Set to 'remove' to remove display name, leave empty to set default 'Discord bridge bot'"
+        help = "Empty it to remove it."
 
         [main.bot.avatar]
         ask = "Avatar for Bot"
