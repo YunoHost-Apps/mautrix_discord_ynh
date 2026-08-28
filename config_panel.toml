@@ -44,10 +44,8 @@ services = ["__APP__"]
         ask = "Display name for Bot"
         type = "string"
         help = "Set to 'remove' to remove display name, leave empty to set default 'Discord bridge bot'"
-        bind = ":__INSTALL_DIR__/config.yaml"
 
         [main.bot.avatar]
         ask = "Avatar for Bot"
         type = "string"
-        help = "Should be in format 'mxc://server_name/NeXNQarUbrlYBiPCpprYsRqr', see README for tutorial. Set to 'remove' to remove avatar, leave empty to use standard Discord logo."
-        bind = ":__INSTALL_DIR__/config.yaml"
+        help = "Should be in format 'mxc://server_name/some_id'. Empty it to remove it. Enter 'default' to reset it to its default value"
