@@ -20,6 +20,14 @@ install_dir=$(ynh_app_setting_get --key=install_dir)
 # SPECIFIC SETTERS FOR TOML SHORT KEYS
 #=================================================
 
+set__avatar() {
+    if [ "$avatar" == "default" ]; then
+        ynh_app_setting_set --key="avatar" --value=""
+        ynh_app_setting_set_default --key="avatar" --value="mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC"
+    else
+        ynh_app_setting_set --key="avatar" --value="$avatar"
+    fi
+}
 
 #=================================================
 # OVERWRITING APPLY STEP
