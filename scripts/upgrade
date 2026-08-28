@@ -3,18 +3,11 @@
 source _common.sh
 source /usr/share/yunohost/helpers
 
-server_name=$(ynh_app_setting_get --key=server_name)
 synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
 
 synapse_db_name="$(get_synapse_db_name $synapse_instance)"
 bot_synapse_db_user="@$botname:$server_name"
 appserviceid=$app
-
-async_media=$(ynh_app_setting_get --key=async_media)
-
-listrelay=$(ynh_app_setting_get --key=listrelay)
-listuser=$(ynh_app_setting_get --key=listuser)
-listadmin=$(ynh_app_setting_get --key=listadmin)
 
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -24,21 +17,36 @@ ynh_script_progression "Stopping $app's systemd service..."
 ynh_systemctl --action="stop"
 
 #=================================================
+# ENSURE DOWNWARD COMPATIBILITY
+#=================================================
+
+if ynh_app_upgrading_from_version_before_or_equal_to "0.7.7~ynh1"; then
+    migrate_permissions_to_appsettings
+    rename_setting "domain" "hs_domain"
+    rename_setting "server_name" "hs_server_name"
+fi
+
+ynh_app_setting_set_default --key="avatar" --value="mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC"
+ynh_app_setting_set_default --key="displayname" --value="Discord bridge bot"
+
+#=================================================
 # "REBUILD" THE APP (DEPLOY NEW SOURCES, RERUN NPM BUILD...)
 #=================================================
 # DOWNLOAD, CHECK AND UNPACK SOURCE
 #=================================================
 
-# FIXME: this is still supported but the recommendation is now to *always* re-setup the app sources wether or not the upstream sources changed
-if ynh_app_upstream_version_changed
-then
-	ynh_script_progression "Upgrading source files..."
-
-	# Download, check integrity, uncompress and patch the source from manifest.toml
-	ynh_setup_source --dest_dir="$install_dir"
-fi
+ynh_setup_source --dest_dir="$install_dir"
 
 chmod 750 "$install_dir/$APP_BIN"
+
+#=================================================
+# UPDATE A CONFIG FILE
+#=================================================
+ynh_script_progression "Updating $app's configuration files..."
+
+ynh_config_add --template="config.yaml.j2" --destination="$install_dir/config.yaml" --jinja
+chmod 400 "$install_dir/config.yaml"
+chown "$app:$app" "$install_dir/config.yaml"
 
 #=================================================
 # REAPPLY SYSTEM CONFIGURATIONS
@@ -50,33 +58,8 @@ ynh_config_add_systemd
 yunohost service add $app --description="Matrix Discord pupetting bridge for YunoHost" --log="/var/log/$app/$app.log"
 
 # Use logrotate to manage application logfile(s)
-ynh_config_add_logrotate  "/var/log/$app/$app.log"
+ynh_config_add_logrotate
 
-#=================================================
-# RECONFIGURE THE APP (UPDATE CONF, APPLY MIGRATIONS...)
-#=================================================
-# UPDATE A CONFIG FILE
-#=================================================
-ynh_script_progression "Updating configuration..."
-
-# reset permissions to be able to apply_permissions with app_setting values after upgrade
-listrelay_=$listrelay
-listuser_=$listuser
-listadmin_=$listadmin
-listrelay="*"
-listuser="@user:domain.tld"
-listadmin="@admin:domain.tld"
-
-ynh_config_add --template="config.yaml" --destination="$install_dir/config.yaml"
-
-listrelay=$listrelay_
-listuser=$listuser_
-listadmin=$listadmin_
-
-# apply_permissions to have correct syntax in config file
-set__listuser
-set__listrelay
-set__listadmin
 
 #=================================================
 # REGISTER SYNAPSE APP-SERVICE
@@ -88,7 +71,6 @@ $synapse_install_dir/update_synapse_for_appservice.sh || ynh_die "Synapse can't 
 
 # Set permissions on app files
 ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
-ynh_store_file_checksum "$install_dir/config.yaml"
 
 #=================================================
 # START SYSTEMD SERVICE

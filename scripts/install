@@ -4,39 +4,22 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 # Retrieve some values from selected Synapse instance and store them
-server_name=$(ynh_app_setting_get --app $synapse_instance --key server_name)
+# NB: hs_ stands for Homeserver
+hs_server_name=$(ynh_app_setting_get --app $synapse_instance --key hs_server_name)
 synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
-domain=$(ynh_app_setting_get --app $synapse_instance --key domain)
-ynh_app_setting_set --key=server_name --value=$server_name
-ynh_app_setting_set --key=domain --value=$domain
+hs_domain=$(ynh_app_setting_get --app $synapse_instance --key domain)
+ynh_app_setting_set --key=hs_server_name --value=$hs_server_name
+ynh_app_setting_set --key=hs_domain --value=$hs_domain
 synapse_db_name="$(get_synapse_db_name $synapse_instance)"
-
-synapse_version=$(yunohost app info $synapse_instance | grep -oP "version:\s*\K.*")
 
 #=================================================
 # SET STANDARD SETTINGS FROM DEFAULT CONFIG
 #=================================================
 
-# Die if Synapse is too outdated (1.22.0 is required for ephemeral_events)
-if dpkg --compare-versions $synapse_version lt 1.22.0; then
-  ynh_die "Unsupported Synapse version. Please upgrade."
-fi
-
 appserviceid=$app
-if dpkg --compare-versions $synapse_version ge 1.97.0; then
-  async_media="true"
-else
-  async_media="false"
-fi
 
-listrelay="*"
-listadmin="$botadmin"
-listuser="$botusers"
-
-ynh_app_setting_set --key=async_media --value=$async_media
-ynh_app_setting_set --key=listrelay --value=$listrelay
-ynh_app_setting_set --key=listadmin --value=$listadmin
-ynh_app_setting_set --key=listuser --value=$listuser
+ynh_app_setting_set_default --key="avatar" --value="mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC"
+ynh_app_setting_set_default --key="displayname" --value="Discord bridge bot"
 
 #=================================================
 # APP "BUILD" (DEPLOYING SOURCES, VENV, COMPILING ETC)
@@ -45,7 +28,6 @@ ynh_app_setting_set --key=listuser --value=$listuser
 #=================================================
 ynh_script_progression "Setting up source files..."
 
-ynh_app_setting_set --key=listuser --value=$listuser
 # Download, check integrity, uncompress and patch the source from manifest.toml
 ynh_setup_source --dest_dir="$install_dir"
 
@@ -70,18 +52,14 @@ ynh_config_add_logrotate  "/var/log/$app/$app.log"
 #=================================================
 ynh_script_progression "Adding $app's configuration..."
 
-ynh_config_add --template="config.yaml" --destination="$install_dir/config.yaml"
-
-# This calls allows to set multiple users during install question "botusers" specifying them separated by a comma
-set__listuser
-set__listrelay
-set__listadmin
+ynh_config_add --template="config.yaml.j2" --destination="$install_dir/config.yaml" --jinja
+chmod 400 "$install_dir/config.yaml"
+chown "$app:$app" "$install_dir/config.yaml"
 
 $install_dir/$APP_BIN -g -c $install_dir/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
 $synapse_install_dir/update_synapse_for_appservice.sh || ynh_die "Synapse can't restart with the appservice configuration"
 
 ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
-ynh_store_file_checksum "$install_dir/config.yaml"
 
 #=================================================
 # START SYSTEMD SERVICE
@@ -94,9 +72,9 @@ ynh_systemctl --action="start"
 sleep 30
 
 # (Note that, by default, non-admins might not have your homeserver's permission to create Spaces.)
-if [ "$bot_synapse_adm" = true ]
+if [ "$bot_synapse_adm" == "1" ]
 then
-  ynh_psql_db_shell $synapse_db_name <<< "UPDATE users SET admin = 1 WHERE name = ""$botname"";"
+    ynh_psql_db_shell $synapse_db_name <<< "UPDATE users SET admin = 1 WHERE name = ""$botname"";"
 fi
 
 ynh_systemctl --action="restart"
