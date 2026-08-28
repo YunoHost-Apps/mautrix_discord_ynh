@@ -11,23 +11,23 @@ services = ["__APP__"]
         ask = '''
         Roles with Increasing Power: Relay<User<Admin
         Allowed values for roles:
-        - * : All Matrix users
-        - domain.tld : All users on a given homeserver
-        - mxid (@user:matrix.org) : Specific Matrix user
+        - `*` : All Matrix users
+        - `domain.tld` : All users on a given homeserver
+        - mxid (`@user:matrix.org`) : Specific Matrix user
         '''
         type = "markdown"
 
-        [main.permissions.listrelay]
+        [main.permissions.relays]
         ask = "Users bridged thanks to Relay Mode"
         type = "tags"
         help = "Relay Role: Talk on Discord through the RelayBot in a room where it has been activated with '!wa set-relay', no access otherwise."
 
-        [main.permissions.listuser]
+        [main.permissions.botusers]
         ask = "Bridge Users"
         type = "tags"
         help = "User Role: Access to use the bridge to chat with a Discord account."
 
-        [main.permissions.listadmin]
+        [main.permissions.botadmins]
         ask = "Bridge Administrators"
         type = "tags"
         help = "Admin Role: User level and some additional administration tools."
