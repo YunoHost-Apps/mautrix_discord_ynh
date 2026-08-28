@@ -345,13 +345,13 @@ bridge:
     #   domain - All users on that homeserver
     #     mxid - Specific user
     permissions:
-        {% for relay in listrelay.split(",") %}
+        {% for relay in relays.split(",") %}
         "{{ relay.trim() }}": "relay"
         {% endfor %}
-        {% for user in listuser.split(",") %}
+        {% for user in botusers.split(",") %}
         "{{ user.trim() }}": "user"
         {% endfor %}
-        {% for admin in listadmin.split(",") %}
+        {% for admin in botadmins.split(",") %}
         "{{ admin.trim() }}": "admin"
         {% endfor %}
 
