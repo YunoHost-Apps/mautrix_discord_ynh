@@ -345,14 +345,14 @@ bridge:
     #   domain - All users on that homeserver
     #     mxid - Specific user
     permissions:
-        {% for relay in relays.split(",") %}
-        "{{ relay.trim() }}": "relay"
+        {% for relay in relays.split(",") +%}
+        {%+ if relay.strip() %}"{{ relay.strip() }}": "relay"{% endif %}
         {% endfor %}
-        {% for user in botusers.split(",") %}
-        "{{ user.trim() }}": "user"
+        {% for user in botusers.split(",") +%}
+        {%+ if user.strip() %}"{{ user.strip() }}": "user"{% endif %}
         {% endfor %}
-        {% for admin in botadmins.split(",") %}
-        "{{ admin.trim() }}": "admin"
+        {% for admin in botadmins.split(",") +%}
+        {%+ if admin.strip() %}"{{ admin.strip() }}": "admin"{% endif %}
         {% endfor %}
 
 # Logging config. See https://github.com/tulir/zeroconfig for details.
