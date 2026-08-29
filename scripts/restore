@@ -8,7 +8,7 @@ hs_server_name=$(ynh_app_setting_get --key=hs_server_name)
 synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
 
 synapse_db_name="$(get_synapse_db_name $synapse_instance)"
-bot_synapse_db_user="@$botname:$server_name"
+bot_synapse_db_user="@$botname:$hs_server_name"
 
 #=================================================
 # RESTORE THE APP MAIN DIR
