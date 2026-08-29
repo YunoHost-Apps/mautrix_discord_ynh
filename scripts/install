@@ -5,7 +5,7 @@ source /usr/share/yunohost/helpers
 
 # Retrieve some values from selected Synapse instance and store them
 # NB: hs_ stands for Homeserver
-hs_server_name=$(ynh_app_setting_get --app $synapse_instance --key hs_server_name)
+hs_server_name=$(ynh_app_setting_get --app $synapse_instance --key server_name)
 synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
 hs_domain=$(ynh_app_setting_get --app $synapse_instance --key domain)
 ynh_app_setting_set --key=hs_server_name --value=$hs_server_name
