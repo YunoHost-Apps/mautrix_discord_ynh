@@ -34,7 +34,7 @@ preinstall = """
 
 # On additional tests suites, you can decide to run only specific tests
 
-only = ["install.subdir"]
+only = ["install.root", "install.nourl"]
 
 args.botadmins = "@johndoe:server.name,janedoe:other.host"
 args.botusers = "@john:server.name,@jdoe:server.name,@janedoe:server.name"
