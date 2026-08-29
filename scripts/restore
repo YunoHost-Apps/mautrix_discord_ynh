@@ -63,7 +63,7 @@ sleep 30
 # (Note that, by default, non-admins might not have your homeserver's permission to create communities.)
 if [ "$bot_synapse_adm" == "1" ]
 then
-  ynh_psql_db_shell $synapse_db_name <<< "UPDATE users SET admin = 1 WHERE name = ""$botname"";"
+  ynh_psql_db_shell $synapse_db_name <<< "UPDATE users SET admin = 1 WHERE name = '$botname';"
 fi
 ynh_systemctl --action="restart"
 
