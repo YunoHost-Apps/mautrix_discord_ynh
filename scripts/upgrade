@@ -16,7 +16,7 @@ ynh_systemctl --action="stop"
 # ENSURE DOWNWARD COMPATIBILITY
 #=================================================
 
-if ynh_app_upgrading_from_version_before_or_equal_to "0.7.7~ynh1"; then
+if ynh_app_upgrading_from_version_before "0.7.7~ynh1"; then
     migrate_permissions_to_appsettings
     rename_setting "domain" "hs_domain"
     rename_setting "server_name" "hs_server_name"
