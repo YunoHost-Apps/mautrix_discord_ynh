@@ -46,5 +46,5 @@ rename_setting() {
     value=$(ynh_app_setting_get --key="$old_name")
     ynh_app_setting_set --key="$new_name" --value="$value"
     ynh_app_setting_delete --key="$old_name"
-    eval "$old_name=\$value"
+    eval "$new_name=\$value"
 }
