@@ -22,20 +22,20 @@ with open("${install_dir}/config.yaml", "r") as file:
 
 # Reverse value and keys so we can create simpler jq queries
 users_by_perm = dict()
-for key, value in users_by_perm:
-    my_inverted_dict.setdefault(value, list()).append(key)
+for key, value in config["bridge"]["permissions"].items():
+    users_by_perm.setdefault(value, list()).append(key)
 
-print(json.dumps(my_inverted_dict))
+print(json.dumps(users_by_perm))
 EOF
     )
 
-    relays="$(jq '.relay | join(",")' <<< "$permissions")"
+    relays="$(jq '(.relay // []) | join(",")' <<< "$permissions")"
     ynh_app_setting_set --key=relays --value="$relays"
 
-    botusers="$(jq '.user | join(",")' <<< "$permissions")"
+    botusers="$(jq '(.user // []) | join(",")' <<< "$permissions")"
     ynh_app_setting_set --key=botusers --value="$botusers"
 
-    botadmins="$(jq '.admin | join(",")' <<< "$permissions")"
+    botadmins="$(jq '(.admin // []) | join(",")' <<< "$permissions")"
     ynh_app_setting_set --key=botadmins --value="$botadmins"
 }
 
