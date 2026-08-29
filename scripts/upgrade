@@ -76,6 +76,7 @@ $synapse_install_dir/update_synapse_for_appservice.sh || ynh_die "Synapse can't 
 
 # Set permissions on app files
 ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
+ynh_store_file_checksum "$install_dir/config.yaml"
 
 #=================================================
 # START SYSTEMD SERVICE
