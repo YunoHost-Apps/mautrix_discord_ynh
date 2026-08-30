@@ -2,12 +2,6 @@
 
 APP_BIN=mautrix-discord
 
-get_synapse_db_name() {
-	# Parameters: synapse instance identifier
-	# Returns: database name
-	ynh_app_setting_get --app="$1" --key=db_name
-}
-
 # Before we used jinja, permissions would have to be set by the user in the config file.
 # Only that part of the file were kept, the rest were overwritten.
 # Now that we use jinja, extract the permissions of the config file
