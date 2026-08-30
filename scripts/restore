@@ -31,8 +31,7 @@ ynh_psql_db_shell  < "./db.sql"
 #=================================================
 ynh_script_progression "Registering Synapse app-service"
 
-$install_dir/$APP_BIN -g -c $install_dir/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
-$synapse_install_dir/update_synapse_for_appservice.sh || ynh_die "Synapse can't restart with the appservice configuration"
+generate_registration
 
 #=================================================
 # RESTORE SYSTEM CONFIGURATIONS

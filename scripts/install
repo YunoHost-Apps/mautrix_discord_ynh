@@ -57,11 +57,7 @@ ynh_config_add --template="config.yaml.j2" --destination="$install_dir/config.ya
 chmod 400 "$install_dir/config.yaml"
 chown "$app:$app" "$install_dir/config.yaml"
 
-$install_dir/$APP_BIN -g -c $install_dir/config.yaml -r /etc/matrix-$synapse_instance/app-service/$app.yaml
-$synapse_install_dir/update_synapse_for_appservice.sh || ynh_die "Synapse can't restart with the appservice configuration"
-
-ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
-ynh_store_file_checksum "$install_dir/config.yaml"
+generate_registration
 
 #=================================================
 # START SYSTEMD SERVICE
