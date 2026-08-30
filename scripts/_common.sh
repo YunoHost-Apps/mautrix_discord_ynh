@@ -48,3 +48,18 @@ rename_setting() {
     ynh_app_setting_delete --key="$old_name"
     eval "$new_name=\$value"
 }
+
+generate_registration() {
+    # As the app user, update the config file (-c option) and generate the registration (-g and -r) to a temp file
+    registration=$(ynh_exec_as_app mktemp)
+    ynh_exec_as_app $install_dir/$APP_BIN -g -c $install_dir/config.yaml -r "$registration"
+
+    # Move it to the matrix config folder, invoke the update_synapse_for_appservice (it will fix the ownership)
+    mv "$registration" "/etc/matrix-$synapse_instance/app-service/$app.yaml"
+    "$synapse_install_dir/update_synapse_for_appservice.sh" || ynh_die "Synapse can't restart with the appservice configuration"
+
+    # As the app have been generated / updated, store their checksum so it won't be
+    # detected as modified during the next upgrade
+    ynh_store_file_checksum "/etc/matrix-$synapse_instance/app-service/$app.yaml"
+    ynh_store_file_checksum "$install_dir/config.yaml"
+}
