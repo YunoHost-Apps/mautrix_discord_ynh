@@ -45,6 +45,9 @@ rename_setting() {
 
 generate_registration() {
     # As the app user, update the config file (-c option) and generate the registration (-g and -r) to a temp file
+    local synapse_install_dir
+    local registration
+    synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
     registration=$(ynh_exec_as_app mktemp)
     ynh_exec_as_app $install_dir/$APP_BIN -g -c $install_dir/config.yaml -r "$registration"
 

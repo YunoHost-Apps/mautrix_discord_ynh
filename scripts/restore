@@ -5,7 +5,6 @@ source ../settings/scripts/_common.sh
 source /usr/share/yunohost/helpers
 
 hs_server_name=$(ynh_app_setting_get --key=hs_server_name)
-synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
 
 #=================================================
 # RESTORE THE APP MAIN DIR
