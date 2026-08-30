@@ -4,6 +4,7 @@ source _common.sh
 source /usr/share/yunohost/helpers
 
 synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
+appserviceid=$app
 
 #=================================================
 # STOP SYSTEMD SERVICE
@@ -23,16 +24,6 @@ if ynh_app_upgrading_from_version_before "0.7.7~ynh1"; then
     ynh_app_setting_set_default --key="avatar" --value="mxc://maunium.net/nIdEykemnwdisvHbpxflpDlC"
     ynh_app_setting_set_default --key="displayname" --value="Discord bridge bot"
 fi
-
-#=================================================
-# SET VARIABLES
-#=================================================
-
-# Need to be set after the migration due to the renamings
-synapse_db_name="$(get_synapse_db_name $synapse_instance)"
-bot_synapse_db_user="@$botname:$hs_server_name"
-appserviceid=$app
-
 
 #=================================================
 # "REBUILD" THE APP (DEPLOY NEW SOURCES, RERUN NPM BUILD...)

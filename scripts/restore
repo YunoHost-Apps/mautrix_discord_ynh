@@ -7,9 +7,6 @@ source /usr/share/yunohost/helpers
 hs_server_name=$(ynh_app_setting_get --key=hs_server_name)
 synapse_install_dir=$(ynh_app_setting_get --app $synapse_instance --key "install_dir")
 
-synapse_db_name="$(get_synapse_db_name $synapse_instance)"
-bot_synapse_db_user="@$botname:$hs_server_name"
-
 #=================================================
 # RESTORE THE APP MAIN DIR
 #=================================================
@@ -56,15 +53,6 @@ yunohost service add $app --description="Matrix Discord pupetting bridge for Yun
 ynh_script_progression "Reloading $app's service..."
 
 ynh_systemctl --action="start"
-
-# Wait until the synapse user is created
-sleep 30
-# (Note that, by default, non-admins might not have your homeserver's permission to create communities.)
-if [ "$bot_synapse_adm" == "1" ]
-then
-  ynh_psql_db_shell $synapse_db_name <<< "UPDATE users SET admin = 1 WHERE name = '$botname';"
-fi
-ynh_systemctl --action="restart"
 
 #=================================================
 # END OF SCRIPT
