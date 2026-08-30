@@ -29,13 +29,13 @@ print(json.dumps(users_by_perm))
 EOF
     )
 
-    relays="$(jq '(.relay // []) | join(",")' <<< "$permissions")"
+    relays="$(jq -r '(.relay // []) | join(",")' <<< "$permissions")"
     ynh_app_setting_set --key=relays --value="$relays"
 
-    botusers="$(jq '(.user // []) | join(",")' <<< "$permissions")"
+    botusers="$(jq -r '(.user // []) | join(",")' <<< "$permissions")"
     ynh_app_setting_set --key=botusers --value="$botusers"
 
-    botadmins="$(jq '(.admin // []) | join(",")' <<< "$permissions")"
+    botadmins="$(jq -r '(.admin // []) | join(",")' <<< "$permissions")"
     ynh_app_setting_set --key=botadmins --value="$botadmins"
 }
 
