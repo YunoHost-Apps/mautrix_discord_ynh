@@ -32,6 +32,8 @@ set__avatar() {
 #=================================================
 
 ynh_app_config_apply() {
+    appserviceid=$app
+
     _ynh_app_config_apply
 
     ynh_config_add --template="config.yaml.j2" --destination="$install_dir/config.yaml" --jinja
