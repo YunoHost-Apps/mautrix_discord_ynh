@@ -98,7 +98,7 @@ ram.runtime = "1024M"
     main.default = 29334
 
     [resources.apt]
-    packages = "postgresql"
+    packages = "postgresql ffmpeg"
 
     [resources.database]
     type = "postgresql"
